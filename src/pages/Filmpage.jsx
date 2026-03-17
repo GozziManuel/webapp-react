@@ -1,7 +1,9 @@
+import FilmcardContainer from "../components/FilmcardContainer";
+
 export default function Filmpage() {
   return (
     <>
-      <h1>Filmpage</h1>
+      <FilmcardContainer />
     </>
   );
 }
