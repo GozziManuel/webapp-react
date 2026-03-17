@@ -1,6 +1,7 @@
 import Filmcard from "./Filmcard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 export default function FilmcardContainer() {
   const [movie, setMovie] = useState([]);
@@ -19,14 +20,16 @@ export default function FilmcardContainer() {
         {movie.map((el, id) => {
           return (
             <div className="col-4" key={el.id}>
-              <div className="cardcontainer">
-                <Filmcard
-                  title={el.title}
-                  image={el.image}
-                  rlsyear={el.release_year}
-                  abstract={el.abstract}
-                />
-              </div>
+              <Link to={"/Filmpage/" + el.id}>
+                <div className="cardcontainer">
+                  <Filmcard
+                    title={el.title}
+                    image={el.image}
+                    rlsyear={el.release_year}
+                    abstract={el.abstract}
+                  />
+                </div>
+              </Link>
             </div>
           );
         })}

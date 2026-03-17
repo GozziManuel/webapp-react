@@ -3,7 +3,10 @@ import { NavLink, Outlet } from "react-router";
 export default function DefaultLayout() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary"
+        data-bs-theme="dark"
+      >
         <div className="container-fluid">
           <NavLink className="navbar-brand" to={"/"}>
             Homepage
