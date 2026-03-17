@@ -14,11 +14,11 @@ export default function FilmcardContainer() {
     });
   }
   return (
-    <div className="container-sm">
+    <div className="container-sm my-5">
       <div className="row g-3">
         {movie.map((el, id) => {
           return (
-            <div className="col-3" key={el.id}>
+            <div className="col-4" key={el.id}>
               <div className="cardcontainer">
                 <Filmcard
                   title={el.title}
