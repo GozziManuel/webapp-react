@@ -18,3 +18,7 @@ a {
 .DetailedImg {
   width: 35%;
 }
+.containeReview {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.229);
+  padding-top: 20px;
+}

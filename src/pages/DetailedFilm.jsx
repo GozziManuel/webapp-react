@@ -15,7 +15,7 @@ export default function DetailedFilm() {
   useEffect(GetIdProduct, []);
 
   return (
-    <div>
+    <div className="container-sm">
       {detailedProduct.map((el) => {
         return (
           <div key={el.id} className="d-flex">
@@ -36,14 +36,18 @@ export default function DetailedFilm() {
           </div>
         );
       })}
-      <div>
-        {/* {detailedProduct.reviews.map((el) => {
+      <div className="p-3">
+        <h2 className="mt-5">Reviews</h2>
+        {detailedProduct[0]?.reviews?.map((el) => {
           return (
-            <>
-              <h1>{el}</h1>
-            </>
+            <div className="containeReview">
+              <h4 className="m-0">{el.name}</h4>
+              <p className="mb-2">
+                {el.text} <strong>{el.vote}/5</strong>
+              </p>
+            </div>
           );
-        })} */}
+        })}
       </div>
     </div>
   );
