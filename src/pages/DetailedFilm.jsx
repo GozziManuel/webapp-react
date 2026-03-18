@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import Starcreator from "../components/Starcreator";
 
 export default function DetailedFilm() {
   const [detailedProduct, SetDetailedProduct] = useState();
@@ -41,10 +42,10 @@ export default function DetailedFilm() {
         <h2 className="mt-5">Reviews</h2>
         {detailedProduct.reviews.map((el) => {
           return (
-            <div className="containeReview">
+            <div className="containeReview" key={el.id}>
               <h4 className="m-0">{el.name}</h4>
               <p className="mb-2">
-                {el.text} <strong>{el.vote}/5</strong>
+                {el.text} <Starcreator vote={el.vote} maxvote={5} />
               </p>
             </div>
           );
