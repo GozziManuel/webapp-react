@@ -5,10 +5,8 @@ export default function Starcreator({ vote, maxvote }) {
       const starPainter = i <= vote ? "bi-star-fill" : "bi-star";
       stars.push(<i key={i} className={`bi ${starPainter}`}></i>);
     }
-    console.log(stars);
     return stars;
   }
-  console.log(vote, maxvote);
 
   return <>{starPusher()}</>;
 }

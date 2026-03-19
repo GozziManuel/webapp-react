@@ -3,8 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Starcreator from "../components/Starcreator";
 
+const InitialFormNames = {
+  name: "",
+  vote: "",
+  abstract: "",
+};
 export default function DetailedFilm() {
   const [detailedProduct, SetDetailedProduct] = useState();
+  const [formData, setFormData] = useState(InitialFormNames);
 
   const { id } = useParams();
   const GetIdProduct = () => {
@@ -13,8 +19,30 @@ export default function DetailedFilm() {
       SetDetailedProduct(res.data.result);
     });
   };
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    postRequest();
+    setFormData(InitialFormNames);
+  };
+  const postRequest = () => {
+    axios
+      .post(`http://localhost:3000/movies/${id}/review`, formData)
+      .then((res) => {
+        console.log(res.data);
+        GetIdProduct();
+      });
+  };
+
   useEffect(GetIdProduct, []);
   if (!detailedProduct) return <div>Loading.....</div>;
+
   return (
     <div className="container-sm">
       <div key={detailedProduct.id} className="d-flex">
@@ -50,6 +78,55 @@ export default function DetailedFilm() {
             </div>
           );
         })}
+      </div>
+
+      <div>
+        <div class="card mt-4">
+          <div class="card-header fs-1">Add Review</div>
+          <div class="card-body">
+            <form onSubmit={handleFormSubmit}>
+              <div className="pt-2">
+                <label htmlFor="">Name</label>
+              </div>
+              <input
+                type="text"
+                className="formText"
+                //
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+              />
+              <div className="pt-2">
+                <label htmlFor="">Vote</label>
+              </div>
+              <input
+                type="number"
+                className="formText"
+                name="vote"
+                //
+                value={formData.vote}
+                onChange={handleFormChange}
+                max={5}
+                min={1}
+              />
+              <div className="pt-2">
+                <label htmlFor="">Abstract</label>
+              </div>
+              <textarea
+                type="text"
+                className="formText"
+                name="abstract"
+                //
+                value={formData.abstract}
+                onChange={handleFormChange}
+              />
+
+              <div className="pt-2">
+                <button class="btn btn-primary">Go somewhere</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
