@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Starcreator from "../components/Starcreator";
+import { useMainContext } from "../context/MainContext";
 
 const InitialFormNames = {
   name: "",
@@ -11,12 +12,15 @@ const InitialFormNames = {
 export default function DetailedFilm() {
   const [detailedProduct, SetDetailedProduct] = useState();
   const [formData, setFormData] = useState(InitialFormNames);
-
+  const { setIsLoading } = useMainContext();
   const { id } = useParams();
+
   const GetIdProduct = () => {
+    setIsLoading(true);
     axios.get(`http://localhost:3000/movies/${id}`).then((res) => {
       console.log(res.data.result);
       SetDetailedProduct(res.data.result);
+      setIsLoading(false);
     });
   };
   const handleFormChange = (e) => {
@@ -32,6 +36,7 @@ export default function DetailedFilm() {
     setFormData(InitialFormNames);
   };
   const postRequest = () => {
+    setIsLoading(true);
     axios
       .post(`http://localhost:3000/movies/${id}/review`, formData)
       .then((res) => {
@@ -41,7 +46,7 @@ export default function DetailedFilm() {
   };
 
   useEffect(GetIdProduct, []);
-  if (!detailedProduct) return <div>Loading.....</div>;
+  if (!detailedProduct) return <div className="loader">Loading.....</div>;
 
   return (
     <div className="container-sm">
@@ -94,6 +99,7 @@ export default function DetailedFilm() {
                 //
                 name="name"
                 value={formData.name}
+                required
                 onChange={handleFormChange}
               />
               <div className="pt-2">
@@ -108,6 +114,7 @@ export default function DetailedFilm() {
                 onChange={handleFormChange}
                 max={5}
                 min={1}
+                required
               />
               <div className="pt-2">
                 <label htmlFor="">Abstract</label>
@@ -119,10 +126,11 @@ export default function DetailedFilm() {
                 //
                 value={formData.abstract}
                 onChange={handleFormChange}
+                required
               />
 
               <div className="pt-2">
-                <button class="btn btn-primary">Go somewhere</button>
+                <button class="btn btn-primary">Add review</button>
               </div>
             </form>
           </div>
