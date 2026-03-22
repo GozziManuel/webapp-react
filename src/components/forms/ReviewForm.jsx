@@ -1,4 +1,5 @@
 export default function ReviewForm({ onSubmit, data, setFormData }) {
+  // Tracing input request
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -8,6 +9,7 @@ export default function ReviewForm({ onSubmit, data, setFormData }) {
   };
   console.log(data);
 
+  //   returning forms
   return (
     <form onSubmit={onSubmit}>
       <div className="pt-2">

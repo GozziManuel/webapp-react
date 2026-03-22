@@ -1,21 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Starcreator from "../components/Starcreator";
 import { useMainContext } from "../context/MainContext";
 import ReviewForm from "../components/forms/ReviewForm";
+import ReviewCard from "../components/cards/Reviewcard";
 
+// INITIAL OBJECT FOR HANDLETRACING
 const InitialFormNames = {
   name: "",
   vote: "",
   abstract: "",
 };
 export default function DetailedFilm() {
+  // States
   const [detailedProduct, SetDetailedProduct] = useState();
   const [formData, setFormData] = useState(InitialFormNames);
+
+  // context Imports
   const { setIsLoading } = useMainContext();
+
+  // Id imports
   const { id } = useParams();
 
+  // Getting specific input id
   const GetIdProduct = () => {
     setIsLoading(true);
     axios.get(`http://localhost:3000/movies/${id}`).then((res) => {
@@ -25,11 +32,14 @@ export default function DetailedFilm() {
     });
   };
 
+  // Submit infos
   const handleFormSubmit = (e) => {
     e.preventDefault();
     postRequest();
     setFormData(InitialFormNames);
   };
+
+  // sending INFOs to servers
   const postRequest = () => {
     setIsLoading(true);
     axios
@@ -69,15 +79,9 @@ export default function DetailedFilm() {
 
       <div className="p-3">
         <h2 className="mt-5">Reviews</h2>
+
         {detailedProduct.reviews.map((el) => {
-          return (
-            <div className="containeReview" key={el.id}>
-              <h4 className="m-0">{el.name}</h4>
-              <p className="mb-2">
-                {el.text} <Starcreator vote={el.vote} maxvote={5} />
-              </p>
-            </div>
-          );
+          return <ReviewCard el={el} />;
         })}
       </div>
 
@@ -85,6 +89,7 @@ export default function DetailedFilm() {
         <div class="card mt-4">
           <div class="card-header fs-1">Add Review</div>
           <div class="card-body">
+            {/* Review form component */}
             <ReviewForm
               onSubmit={handleFormSubmit}
               data={formData}
