@@ -2,16 +2,20 @@ import Filmcard from "./Filmcard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { useMainContext } from "../context/MainContext";
 
 export default function FilmcardContainer() {
   const [movie, setMovie] = useState([]);
+  const { setIsLoading } = useMainContext();
 
   useEffect(axiosFilms, []);
 
   function axiosFilms() {
+    setIsLoading(true);
     axios.get("http://localhost:3000/movies").then((res) => {
       console.log(res.data.results);
       setMovie(res.data.results);
+      setIsLoading(false);
     });
   }
   return (

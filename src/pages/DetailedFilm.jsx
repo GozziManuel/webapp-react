@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Starcreator from "../components/Starcreator";
 import { useMainContext } from "../context/MainContext";
+import ReviewForm from "../components/forms/ReviewForm";
 
 const InitialFormNames = {
   name: "",
@@ -23,13 +24,7 @@ export default function DetailedFilm() {
       setIsLoading(false);
     });
   };
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     postRequest();
@@ -42,11 +37,12 @@ export default function DetailedFilm() {
       .then((res) => {
         console.log(res.data);
         GetIdProduct();
+        setIsLoading(false);
       });
   };
 
   useEffect(GetIdProduct, []);
-  if (!detailedProduct) return <div className="loader">Loading.....</div>;
+  if (!detailedProduct) return <></>;
 
   return (
     <div className="container-sm">
@@ -89,50 +85,11 @@ export default function DetailedFilm() {
         <div class="card mt-4">
           <div class="card-header fs-1">Add Review</div>
           <div class="card-body">
-            <form onSubmit={handleFormSubmit}>
-              <div className="pt-2">
-                <label htmlFor="">Name</label>
-              </div>
-              <input
-                type="text"
-                className="formText"
-                //
-                name="name"
-                value={formData.name}
-                required
-                onChange={handleFormChange}
-              />
-              <div className="pt-2">
-                <label htmlFor="">Vote</label>
-              </div>
-              <input
-                type="number"
-                className="formText"
-                name="vote"
-                //
-                value={formData.vote}
-                onChange={handleFormChange}
-                max={5}
-                min={1}
-                required
-              />
-              <div className="pt-2">
-                <label htmlFor="">Abstract</label>
-              </div>
-              <textarea
-                type="text"
-                className="formText"
-                name="abstract"
-                //
-                value={formData.abstract}
-                onChange={handleFormChange}
-                required
-              />
-
-              <div className="pt-2">
-                <button class="btn btn-primary">Add review</button>
-              </div>
-            </form>
+            <ReviewForm
+              onSubmit={handleFormSubmit}
+              data={formData}
+              setFormData={setFormData}
+            />
           </div>
         </div>
       </div>
