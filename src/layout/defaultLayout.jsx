@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router";
 import { useMainContext } from "../context/MainContext";
+import Loader from "../components/UI/Loader";
 
 export default function DefaultLayout() {
   const { isLoading } = useMainContext();
@@ -39,11 +40,8 @@ export default function DefaultLayout() {
           </div>
         </div>
       </nav>
-      {isLoading && (
-        <div className="containerLoader">
-          <div className="loader">Loading.....</div>
-        </div>
-      )}
+      {isLoading && <Loader />}
+
       <main>
         <Outlet />
       </main>

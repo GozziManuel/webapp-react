@@ -29,12 +29,8 @@ i {
 .formText {
   width: 100%;
 }
-.loader {
-  font-size: 60px;
-  text-align: center;
-  font-weight: bold;
+.containerLoader {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
 }

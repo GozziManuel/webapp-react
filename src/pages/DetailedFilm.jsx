@@ -81,7 +81,7 @@ export default function DetailedFilm() {
         <h2 className="mt-5">Reviews</h2>
 
         {detailedProduct.reviews.map((el) => {
-          return <ReviewCard el={el} />;
+          return <ReviewCard el={el} key={el.id} />;
         })}
       </div>
 
